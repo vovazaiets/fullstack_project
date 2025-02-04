@@ -1,5 +1,10 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
+
+mongoose.connect('mongodb+srv://vzts2005:T1tw1idZ26trSDK8@cluster0.sgy9j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+).then(()=> console.log('DB ok'))
+.catch((err)=> console.log('DB error', err));
 
 const app = express();
 
@@ -14,10 +19,14 @@ app.get('/',(req,res) => {
 
 app.post('/auth/login', (req,res) => {
     console.log(req.body);
-const token = jwt.sign({
-    email: req.body.email,
-    fullName: 'Name',
-}, 'secret123');
+
+
+    if (req.body.email === 'test@test.com'){
+        const token = jwt.sign({
+            email: req.body.email,
+            fullName: 'Name',
+        }, 'secret123');
+    }
     res.json({
         success: true, 
         token,
